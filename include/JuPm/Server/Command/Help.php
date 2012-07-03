@@ -18,7 +18,7 @@ class JuPm_Server_Command_Help extends JuPm_Server_CommandAbstract
         if ($this->_bJson) {
             echo json_encode(
                 array(
-                    'erorr' => 'Wrong command',
+                    'error' => 'Wrong command',
                     'usage' => $aUsageInfos
                     )
                 );
