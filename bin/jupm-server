@@ -1,0 +1,17 @@
+#!/usr/bin/php
+<?php
+$sProjectRoot = realpath(str_replace(basename(__FILE__), '', __FILE__) . '/../');
+
+set_include_path('.:' . $sProjectRoot . '/include/');
+
+require 'bootstrap.php';
+
+$sCwd = getcwd();
+
+$aArguments = $_SERVER['argv'];
+
+if (count($aArguments) > 1) {
+
+}
+
+new JuPm_Client_ShowUsage();
