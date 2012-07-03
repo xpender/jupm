@@ -50,6 +50,10 @@ class JuPm_Server_Controller
             new JuPm_Server_Command_Info($bJson, $aUri);
 
             exit;
+        } elseif (strtolower($aUri[0]) == 'get') {
+            new JuPm_Server_Command_Get($bJson, $aUri);
+
+            exit;
         }
 
         new JuPm_Server_Command_Help($bJson, $aUri);
