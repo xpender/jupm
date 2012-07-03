@@ -1,4 +1,4 @@
 <?php
 require 'bootstrap.php';
 
-JuPm_Website::getInstance()->dispatch();
+JuPm_Server_Controller::getInstance()->dispatch();
