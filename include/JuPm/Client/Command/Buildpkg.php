@@ -73,10 +73,11 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         $sTarMd5 = md5(CLIENT_CWD . '/out/' . $sPkgFileBase);
 
         // add m5 to package json
+        $aPackageJson['file'] = $sPkgFileBase . '.tar';
         $aPackageJson['md5'] = $sTarMd5;
 
         // add files to package json
-        $aPackageJson['files'] = $aFiles;
+        $aPackageJson['contents'] = $aFiles;
 
         // write pkg
         file_put_contents(CLIENT_CWD . '/out/' . $sPkgFileBase . '.pkg', json_encode($aPackageJson));
