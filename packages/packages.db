@@ -1,6 +1,7 @@
 <?php
 $aDbPackages = array (
   1 => 'rama-base',
+  2 => 'rama-language',
 );
 
 $aDbPackageVersions = array (
@@ -26,6 +27,36 @@ $aDbPackageVersions = array (
       array (
         0 => 'Rama/Exception/Test.php',
         1 => 'Rama/Exception.php',
+      ),
+    ),
+  ),
+  2 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-language',
+      'type' => 'library',
+      'description' => 'Translations reader for BP XML Format',
+      'require' => 
+      array (
+        'rama-base' => '>=0.9',
+      ),
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-language-0.9.tar',
+      'md5' => '89ab09c22975ca1f32013dceda6cf09a',
+      'contents' => 
+      array (
+        0 => 'Rama/LanguageAbstract.php',
+        1 => 'Rama/Language/ParserUtil.php',
+        2 => 'Rama/Language/Exception.php',
       ),
     ),
   ),

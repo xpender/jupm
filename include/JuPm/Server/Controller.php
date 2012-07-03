@@ -46,6 +46,10 @@ class JuPm_Server_Controller
             new JuPm_Server_Command_List($bJson, $aUri);
 
             exit;
+        } elseif (strtolower($aUri[0]) == 'info') {
+            new JuPm_Server_Command_Info($bJson, $aUri);
+
+            exit;
         }
 
         new JuPm_Server_Command_Help($bJson, $aUri);

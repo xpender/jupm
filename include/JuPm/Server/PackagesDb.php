@@ -45,11 +45,11 @@ class JuPm_Server_PackagesDb
 
     public function allPackageVersions($iPackageId)
     {
-        if (!isset($this->_aPackages[$iPackageId])) {
+        if (!isset($this->_aPackageVersions[$iPackageId])) {
             return false;
         }
 
-        return $this->_aPackageVersions;
+        return $this->_aPackageVersions[$iPackageId];
     }
 
     public function getPackageVersion($iPackageId, $iVersion)
