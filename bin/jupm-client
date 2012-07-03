@@ -8,10 +8,15 @@ require 'bootstrap.php';
 
 $sCwd = getcwd();
 
+define('CLIENT_CWD', $sCwd);
+
 $aArguments = $_SERVER['argv'];
 
 if (count($aArguments) > 1) {
-
+    if ($aArguments[1] == 'buildpkg') {
+        new JuPm_Client_Command_Buildpkg();
+        exit;
+    }
 }
 
-new JuPm_Client_ShowUsage();
+new JuPm_Client_Command_Help();
