@@ -1,0 +1,32 @@
+<?php
+$aDbPackages = array (
+  1 => 'rama-base',
+);
+
+$aDbPackageVersions = array (
+  1 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-base',
+      'type' => 'library',
+      'description' => 'Base for Rama Packages',
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-base-0.9.tar',
+      'md5' => 'a54c8786990b7ba12729b08c12794dfe',
+      'contents' => 
+      array (
+        0 => 'Rama/Exception/Test.php',
+        1 => 'Rama/Exception.php',
+      ),
+    ),
+  ),
+);

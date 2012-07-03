@@ -3,15 +3,10 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
 {
     public function execute()
     {
-        // deinfes..
-        $sPackagesFolder = JUPM_ROOT . '/packages';
-
-        $sDbFile = JUPM_ROOT . '/data/serverdb.php';
-
         // get all packages
         $aPackages = array();
         
-        $oDir = dir($sPackagesFolder);
+        $oDir = dir(JUPM_PACKAGES_FOLDER);
 
         while (false !== ($sEntry = $oDir->read())) {
             if ($sEntry == '.' || $sEntry == '..' || $sEntry == '.svn' || $sEntry == '.git') {
@@ -31,7 +26,7 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
         echo "[*] Building serverdb" . "\n";
 
         foreach ($aPackages as $sPackage) {
-            $sTmpPkgInfo = file_get_contents($sPackagesFolder . '/' . $sPackage . '.pkg');
+            $sTmpPkgInfo = file_get_contents(JUPM_PACKAGES_FOLDER . '/' . $sPackage . '.pkg');
 
             if (!$sTmpPkgInfo) {
                 echo "[!] $sPackage - error on reading .pkg file\n";
@@ -69,7 +64,7 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
         $sDbFileContent .= "\n";
         $sDbFileContent .= '$aDbPackageVersions = ' . var_export($aDbPackageVersions, true) . ';' . "\n";
 
-        file_put_contents($sDbFile, $sDbFileContent);
+        file_put_contents(JUPM_PACKAGES_DB, $sDbFileContent);
 
         echo "[*] Done\n";
 
