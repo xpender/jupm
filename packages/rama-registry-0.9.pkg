@@ -1,0 +1,1 @@
+{"name":"rama-registry","type":"library","description":"Translations reader for BP XML Format","require":{"rama-base":">=0.9"},"version":"0.9","authors":[{"name":"Marko Kercmar","email":"m.kercmar@bigpoint.net"}],"file":"rama-registry-0.9.tar","md5":"1ea7a5ea5eab2810f1c7d3b743bb0112","contents":["Rama\/Registry.php"]}

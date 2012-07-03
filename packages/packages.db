@@ -1,11 +1,44 @@
 <?php
 $aDbPackages = array (
-  1 => 'rama-base',
-  2 => 'rama-language',
+  1 => 'rama-slayer',
+  2 => 'rama-base',
+  3 => 'rama-language',
+  4 => 'rama-cachehandler',
+  5 => 'rama-template',
+  6 => 'rama-registry',
 );
 
 $aDbPackageVersions = array (
   1 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-slayer',
+      'type' => 'library',
+      'description' => 'Translations reader for BP XML Format',
+      'require' => 
+      array (
+        'rama-base' => '>=0.9',
+      ),
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-slayer-0.9.tar',
+      'md5' => 'b767abf0a6c0ba52d74e42ac34261439',
+      'contents' => 
+      array (
+        0 => 'Rama/SLayer/Client.php',
+        1 => 'Rama/SLayer/Exception.php',
+      ),
+    ),
+  ),
+  2 => 
   array (
     '0.9' => 
     array (
@@ -30,7 +63,7 @@ $aDbPackageVersions = array (
       ),
     ),
   ),
-  2 => 
+  3 => 
   array (
     '0.9' => 
     array (
@@ -57,6 +90,123 @@ $aDbPackageVersions = array (
         0 => 'Rama/LanguageAbstract.php',
         1 => 'Rama/Language/ParserUtil.php',
         2 => 'Rama/Language/Exception.php',
+      ),
+    ),
+  ),
+  4 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-cachehandler',
+      'type' => 'library',
+      'description' => 'Translations reader for BP XML Format',
+      'require' => 
+      array (
+        'rama-base' => '>=0.9',
+      ),
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-cachehandler-0.9.tar',
+      'md5' => 'd0eeee192060e5bf56ed24bfeb14968f',
+      'contents' => 
+      array (
+        0 => 'Rama/CacheHandler/Exception.php',
+        1 => 'Rama/CacheBuilderInterface.php',
+        2 => 'Rama/CacheBuilder/Exception.php',
+        3 => 'Rama/CacheHandlerAbstract.php',
+      ),
+    ),
+  ),
+  5 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-template',
+      'type' => 'library',
+      'description' => 'Translations reader for BP XML Format',
+      'require' => 
+      array (
+        'rama-base' => '>=0.9',
+        'rama-language' => '>=0.9',
+      ),
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-template-0.9.tar',
+      'md5' => '628dfa7162be25a7537e7a9545bb85f3',
+      'contents' => 
+      array (
+        0 => 'Rama/Template/StringStack.php',
+        1 => 'Rama/Template/Compiler.php',
+        2 => 'Rama/Template/ScriptingCompiler.php',
+        3 => 'Rama/Template/Plugin/PrefilterInterface.php',
+        4 => 'Rama/Template/Plugin/Compiler/Staticlang.php',
+        5 => 'Rama/Template/Plugin/Compiler/Langjs.php',
+        6 => 'Rama/Template/Plugin/Compiler/Append.php',
+        7 => 'Rama/Template/Plugin/Compiler/Implode.php',
+        8 => 'Rama/Template/Plugin/Compiler/Lang.php',
+        9 => 'Rama/Template/Plugin/Compiler/Fetch.php',
+        10 => 'Rama/Template/Plugin/Compiler/Assign.php',
+        11 => 'Rama/Template/Plugin/CompilerInterface.php',
+        12 => 'Rama/Template/Plugin/FunctionInterface.php',
+        13 => 'Rama/Template/Plugin/Function/Cycle.php',
+        14 => 'Rama/Template/Plugin/Function/Affiliatebanner.php',
+        15 => 'Rama/Template/Plugin/Function/Htmloptions.php',
+        16 => 'Rama/Template/Plugin/Function/Htmlcheckboxes.php',
+        17 => 'Rama/Template/Plugin/Function/Counter.php',
+        18 => 'Rama/Template/Plugin/Modifier/Truncate.php',
+        19 => 'Rama/Template/Plugin/Modifier/Encodejs.php',
+        20 => 'Rama/Template/Plugin/Modifier/Escape.php',
+        21 => 'Rama/Template/Plugin/Modifier/Concat.php',
+        22 => 'Rama/Template/Plugin/ModifierInterface.php',
+        23 => 'Rama/Template/Plugin/Prefilter/Langjs.php',
+        24 => 'Rama/Template/Plugin/Prefilter/Lang.php',
+        25 => 'Rama/Template/Plugin/BlockInterface.php',
+        26 => 'Rama/Template/VERSION',
+        27 => 'Rama/Template/Exception.php',
+        28 => 'Rama/Template/StringUtil.php',
+        29 => 'Rama/Template.php',
+      ),
+    ),
+  ),
+  6 => 
+  array (
+    '0.9' => 
+    array (
+      'name' => 'rama-registry',
+      'type' => 'library',
+      'description' => 'Translations reader for BP XML Format',
+      'require' => 
+      array (
+        'rama-base' => '>=0.9',
+      ),
+      'version' => '0.9',
+      'authors' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Marko Kercmar',
+          'email' => 'm.kercmar@bigpoint.net',
+        ),
+      ),
+      'file' => 'rama-registry-0.9.tar',
+      'md5' => '1ea7a5ea5eab2810f1c7d3b743bb0112',
+      'contents' => 
+      array (
+        0 => 'Rama/Registry.php',
       ),
     ),
   ),
