@@ -72,10 +72,20 @@ class JuPm_Client_LocalDb_Packages
         $this->_aData[$sPackage] = $sVersion;
     }
 
+    public function remove($sPackage)
+    {
+        unset($this->_aData[$sPackage]);
+    }
+
     public function __destruct()
     {
         $this->_save();
 
         unlink($this->getLockPath());
+    }
+
+    public function all()
+    {
+        return $this->_aData;
     }
 }

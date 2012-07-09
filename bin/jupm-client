@@ -21,6 +21,10 @@ if (count($aArguments) > 1) {
         new JuPm_Client_Command_Deploy();
 
         exit;
+    } elseif ($aArguments[1] == 'clean') {
+        new JuPm_Client_Command_Clean();
+
+        exit;
     }
 }
 

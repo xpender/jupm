@@ -75,7 +75,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         }
 
         // generate hash
-        $sTarMd5 = md5(CLIENT_CWD . '/out/' . $sPkgFileBase);
+        $sTarMd5 = md5_file(CLIENT_CWD . '/out/' . $sPkgFileBase . '.tar');
 
         // add m5 to package json
         $aPackageJson['file'] = $sPkgFileBase . '.tar';

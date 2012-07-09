@@ -94,8 +94,6 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
         while (!$bDepsResolved) {
             foreach ($aRequires as $sPackage => $sVersion) {
                 if (!isset($aPackagesToRepo[$sPackage])) {
-                    var_dump($aRequires);
-                    var_dump($aToInstall);
                     echo "[!] Package " . $sPackage . " not found\n";
 
                     exit;
@@ -187,6 +185,16 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
 
             // download
             $oRepo->download($aPkgQuery['file'], $sTmpFile);
+
+            // md5 check
+            $sLocalMd5 = md5_file($sTmpFile);
+            $sRemoteMd5 = $aPkgQuery['md5'];
+
+            if ($sLocalMd5 !== $sRemoteMd5) {
+                echo "[!] MD5 Check failed for " . $aPkgQuery['file'] . " ($sLocalMd5 !== $sRemoteMd5)\n";
+
+                exit;
+            }
 
             // extract
             $sOldCwd = getcwd();

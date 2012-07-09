@@ -72,10 +72,28 @@ class JuPm_Client_LocalDb_Contents
         $this->_aData[$sFile] = $sPackage;
     }
 
+    public function remove($sFile)
+    {
+        unset($this->_aData[$sFile]);
+    }
+
     public function __destruct()
     {
         $this->_save();
 
         unlink($this->getLockPath());
+    }
+
+    public function getByPackage($sPackage)
+    {
+        $aFiles = array();
+
+        foreach ($this->_aData as $sTmpFile => $sTmpPackage) {
+            if ($sPackage == $sTmpPackage) {
+                $aFiles[] = $sTmpFile;
+            }
+        }
+
+        return $aFiles;
     }
 }
