@@ -36,6 +36,7 @@ class JuPm_ServerApi_Command_Query implements JuPm_ServerApi_CommandInterface
         $aReturn['file'] = $aVersion['file'];
         $aReturn['md5'] = $aVersion['md5'];
         $aReturn['require'] = $aVersion['require'];
+        $aReturn['contents'] = $aVersion['contents'];
 
         return $aReturn;
     }

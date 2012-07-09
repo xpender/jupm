@@ -130,16 +130,21 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
                 unset($aRequires[$sPackage]);
             }
 
+            if (count($aRequires) == 0) {
+                $bDepsResolved = true;
+            }
+            
             $jx++;
 
-            if ($jx > 9) {
-                echo 'Run-forver break';
+            if ($jx >= 100) {
+                echo '[!] Dep-Resolving: Looped 100 times, exiting now.. Something is mostly wrong!' . "\n";
+
                 exit;
             }
         }
-        var_dump($aPackagesToRepo);
-        var_dump($aRequires);
 
+        var_dump($aToInstall);
+        var_dump($aPkgQueryCache);
 
         exit;
 
