@@ -143,8 +143,50 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
             }
         }
 
-        var_dump($aToInstall);
-        var_dump($aPkgQueryCache);
+        // local .jupm folder exists?
+        if (!is_dir(CLIENT_CWD . '/.jupm/')) {
+            @mkdir(CLIENT_CWD . '/.jupm/');
+        }
+        
+        if (!is_dir(CLIENT_CWD . '/.jupm/')) {
+            echo "[!] Error creating .jupm folder\n";
+
+            exit;
+        }
+
+        // get local database
+        $oLocalDbPackages = new JuPm_Client_LocalDb_Packages();
+        $oLocalDbContents = new JuPm_Client_LocalDb_Contents();
+
+        // install stuff
+        foreach ($aToInstall as $sPackage => $sVersion) {
+            if ($oLocalDbPackages->exists($sPackage)) {
+                echo "[*] " . $sPackage . " already installed\n";
+
+                continue;
+            }
+
+            $aPkgQuery = $aPkgQueryCache[$sPackage][$sVersion];
+
+            // check file integrity
+            foreach ($aPkgQuery['contents'] as $sFile => $sMd5) {
+                if ($oLocalDbContents->exists($sFile)) {
+                    echo "[!!!] " . $sFile . " already exists?\n";
+
+                    exit;
+                }
+            }
+            
+            // register package
+            $oLocalDbPackages->add($sPackage, $sVersion);
+
+            // register contents
+            foreach ($aPkgQuery['contents'] as $sFile => $sMd5) {
+                $oLocalDbContents->add($sFile, $sPackage);
+            }
+
+            echo "[*] " . $sPackage . " " . $sVersion . " installed\n";
+        }
 
         exit;
 
