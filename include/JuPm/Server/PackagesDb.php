@@ -5,6 +5,8 @@ class JuPm_Server_PackagesDb
 
     private $_aPackages;
 
+    private $_aPackagesByName;
+
     private $_aPackageVersions;
 
     private function __construct()
@@ -12,6 +14,8 @@ class JuPm_Server_PackagesDb
         require JUPM_PACKAGES_DB;
 
         $this->_aPackages = $aDbPackages;
+
+        $this->_aPackagesByName = $aDbPackagesByName;
 
         $this->_aPackageVersions = $aDbPackageVersions;
     }
@@ -41,6 +45,17 @@ class JuPm_Server_PackagesDb
         }
 
         return $this->_aPackages[$iPackageId];
+    }
+
+    public function getPackageIdByName($sPackageName)
+    {
+        if (!isset($this->_aPackagesByName[$sPackageName])) {
+            return false;
+        }
+
+        $iPackageId = $this->_aPackagesByName[$sPackageName];
+
+        return $iPackageId;
     }
 
     public function allPackageVersions($iPackageId)

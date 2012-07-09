@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana;
+    font-size: 12pt;
+    background-color: #eee;
+    color: black;
+}
+
+.title {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    padding: 5px;
+    font-weight: bold;
+    background-color: orange;
+    border-bottom: 1px solid black;
+}
+
+.back {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 1%;
+    font-weight: bold;
+    border: 1px solid black;
+    width: 100px;
+    text-align: center;
+    padding: 2px;
+    background-color: #ccc;
+}
+
+.main {
+    position: relative;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    background-color: white;
+    border: 1px black dotted;
+    padding: 5px;
+}

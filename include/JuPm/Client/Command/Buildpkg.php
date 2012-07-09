@@ -54,6 +54,11 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
 
         $this->_recursiveFileScan(CLIENT_CWD . '/src', $aFiles);
 
+        // md5 files
+        foreach ($aFiles as $sFile) {
+            $aFileMd5s[$sFile] = md5_file(CLIENT_CWD . '/src/' . $sFile);
+        }
+
         // tar src folder
         chdir(CLIENT_CWD . '/src');
         
@@ -77,7 +82,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         $aPackageJson['md5'] = $sTarMd5;
 
         // add files to package json
-        $aPackageJson['contents'] = $aFiles;
+        $aPackageJson['contents'] = $aFileMd5s;
 
         // write pkg
         file_put_contents(CLIENT_CWD . '/out/' . $sPkgFileBase . '.pkg', json_encode($aPackageJson));

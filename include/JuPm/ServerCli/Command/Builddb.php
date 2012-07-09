@@ -21,6 +21,7 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
         // build db
         $aDbPackages = array();
         $aDbPackageVersions = array();
+        $aDbPackagesByName = array();
         $iDbPackageId = 1;
 
         echo "[*] Building serverdb" . "\n";
@@ -48,6 +49,8 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
             } else {
                 $aDbPackages[$iDbPackageId] = $sTmpRealName;
 
+                $aDbPackagesByName[$sTmpRealName] = $iDbPackageId;
+
                 $iTmpPkgId = $iDbPackageId;
 
                 $iDbPackageId++;
@@ -63,6 +66,9 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
         $sDbFileContent .= '$aDbPackages = ' . var_export($aDbPackages, true) . ';' . "\n";
         $sDbFileContent .= "\n";
         $sDbFileContent .= '$aDbPackageVersions = ' . var_export($aDbPackageVersions, true) . ';' . "\n";
+        $sDbFileContent .= "\n";
+        $sDbFileContent .= '$aDbPackagesByName = ' . var_export($aDbPackagesByName, true) . ';' . "\n";
+        $sDbFileContent .= "\n";
 
         file_put_contents(JUPM_PACKAGES_DB, $sDbFileContent);
 

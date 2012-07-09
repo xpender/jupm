@@ -7,4 +7,5 @@ if (!file_exists(JUPM_PACKAGES_DB)) {
     exit;
 }
 
-JuPm_Server_Controller::getInstance()->dispatch();
+$oFrontendController = new JuPm_Frontend_Controller();
+$oFrontendController->dispatch();
