@@ -84,4 +84,27 @@ class JuPm_Client_Repository
     
         return array_shift($aResponse);
     }
+
+    public function download($sFile, $sTargetFile)
+    {
+        $aRequest = array(
+            array(
+                'cmd' => 'download',
+                'file' => $sFile
+                )
+            );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->_sUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'json=' . json_encode($aRequest));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        file_put_contents($sTargetFile, $result);
+    }
 }

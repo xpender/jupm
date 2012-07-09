@@ -176,6 +176,33 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
                     exit;
                 }
             }
+
+            // download package..
+            $sTmpFile = '/tmp/jupm.' . md5($aPkgQuery['file'] . time() . microtime(true) . uniqid() . mt_rand(0, 10000));
+
+            // get repo client
+            $iRepoId = $aPackagesToRepo[$sPackage];
+
+            $oRepo = $aRepos[$iRepoId];
+
+            // download
+            $oRepo->download($aPkgQuery['file'], $sTmpFile);
+
+            // extract
+            $sOldCwd = getcwd();
+
+            chdir($sTargetFolder);
+
+            $sTarCommand = 'tar xf ' . $sTmpFile . ' -C ' . $sTargetFolder;
+
+            echo "[?] $sTarCommand\n";
+
+            exec($sTarCommand);
+
+            chdir($sOldCwd);
+
+            // remove downloaded file
+            unlink($sTmpFile);
             
             // register package
             $oLocalDbPackages->add($sPackage, $sVersion);
@@ -186,57 +213,6 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
             }
 
             echo "[*] " . $sPackage . " " . $sVersion . " installed\n";
-        }
-
-        exit;
-
-        // TODO: Implement repositiory ping?
-
-        // Get repositiory packages list
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $aJupmConfig['repository'] . '/json/list');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $r = curl_exec($ch);
-
-        $j = json_decode($r, true);
-
-        $aRemotePackages = $j['packages'];
-
-        // deploy stuff..
-        echo "[*] Deploying..\n";
-
-        // Go through require's
-        foreach ($aJupmConfig['require'] as $sPackage => $sVersion) {
-            if (!in_array($sPackage, $aRemotePackages)) {
-                echo "[!] Invalid package: $sPackage \n";
-
-                continue;
-            }
-
-            $sVersion = str_replace(array('=', '>='), '', $sVersion);
-
-            $iPackageId = (int)array_search($sPackage, $aRemotePackages);
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $aJupmConfig['repository'] . '/json/get/' . $iPackageId . '/' . $sVersion . '/');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            $r = curl_exec($ch);
-
-            $sTmpFile = '/tmp/jupm.' . md5(time() . microtime(true) . uniqid() . rand(0, 100000));
-
-            file_put_contents($sTmpFile, $r); 
-
-            chdir($sTargetFolder);
-
-            $sTarCommand = 'tar xvf ' . $sTmpFile;
-
-            exec($sTarCommand);
-
-            unlink($sTmpFile);
-
-            echo "[*] " . $sPackage . " " . $sVersion . " deployed\n";
         }
 
         echo "[*] Done\n";
