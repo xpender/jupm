@@ -6,6 +6,7 @@ class JuPm_ServerApi_Command_List implements JuPm_ServerApi_CommandInterface
         $oPackagesDb = JuPm_Server_PackagesDb::getInstance();
 
         $aReturn = array();
+        $aReturn['result'] = 'OK';
         $aReturn['packages'] = array();
 
         foreach ($oPackagesDb->allPackages() as $iPackageId => $sPackageName) {

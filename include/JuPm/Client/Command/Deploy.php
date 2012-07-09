@@ -3,6 +3,7 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
 {
     public function execute()
     {
+        // jupm.conf exists?
         $sJupmConfig = CLIENT_CWD . '/jupm.conf';
 
         if (!file_exists($sJupmConfig)) {
@@ -11,6 +12,7 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
             exit;
         }
 
+        // get jump.conf content
         $sJupmConfigContent = file_get_contents($sJupmConfig);
 
         if (!$sJupmConfigContent) {
@@ -35,6 +37,111 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
 
             exit;
         }
+
+        // Init repository clients
+        $aRepos = array();
+
+        $iRepo = 1;
+
+        foreach ($aJupmConfig['repositorys'] as $sUrl) {
+            $oRepo = new JuPm_Client_Repository(
+                $sUrl
+                );
+
+            $aPing = $oRepo->ping();
+
+            if ($aPing['result'] != 'OK') {
+                echo "[!] Repo $sUrl doesn't respond correctly: " . $aPing['error'] . "\n";
+
+                continue;
+            }
+
+            echo "[*] Repo $sUrl OKAY\n";
+
+            $aRepos[$iRepo] = $oRepo;
+
+            $iRepo++;
+        }
+
+        // Get requires
+        $aRequires = $aJupmConfig['require'];
+
+        // List repo packages..
+        $aPackageToRepo = array();
+
+        foreach ($aRepos as $iRepoId => $oRepo) {
+            $aRepoPkgs = $oRepo->listpkgs();
+
+            if ($aRepoPkgs['result'] != 'OK') {
+                echo "[!] Repo " . $oRepo->getUrl() . " error on listing packages\n";
+
+                continue;
+            }
+
+            foreach ($aRepoPkgs['packages'] as $aRepoPkg) {
+                $aPackagesToRepo[$aRepoPkg['name']] = $iRepoId;
+            }
+        }
+
+        // depedency resolve..
+        $aPkgQueryCache = array();
+
+        $aToInstall = array();
+        $bDepsResolved = false;
+
+        $jx = 0;
+
+        while (!$bDepsResolved) {
+            foreach ($aRequires as $sPackage => $sVersion) {
+                if (!isset($aPackagesToRepo[$sPackage])) {
+                    var_dump($aRequires);
+                    var_dump($aToInstall);
+                    echo "[!] Package " . $sPackage . " not found\n";
+
+                    exit;
+                }
+
+                $iRepoId = $aPackagesToRepo[$sPackage];
+
+                $oRepo = $aRepos[$iRepoId];
+
+                $aQuery = $oRepo->query($sPackage, $sVersion);
+
+                if ($aQuery['result'] != 'OK') {
+                    echo "[!] Package " . $sPackage . ", Version " . $sVersion . " not available\n";
+
+                    exit;
+                }
+
+                if (is_array($aQuery['require'])) {
+                    foreach ($aQuery['require'] as $sReqPackage => $sReqVersion) {
+                        $sReqVersion = str_replace(array('>=', '='), '', $sReqVersion); // TODO: We are not comparing versions and stuff..
+
+                        if (!isset($aToInstall[$sReqPackage]) && !isset($aRequires[$sReqPackage])) {
+                            $aRequires[$sReqPackage] = $sReqVersion;
+                        }
+                    }
+                }
+
+                $aPkgQueryCache[$sPackage][$sVersion] = $aQuery;
+
+                $aToInstall[$sPackage] = $sVersion;
+
+                unset($aRequires[$sPackage]);
+            }
+
+            $jx++;
+
+            if ($jx > 9) {
+                echo 'Run-forver break';
+                exit;
+            }
+        }
+        var_dump($aPackagesToRepo);
+        var_dump($aRequires);
+
+
+        exit;
 
         // TODO: Implement repositiory ping?
 

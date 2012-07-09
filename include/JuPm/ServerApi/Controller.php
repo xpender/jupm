@@ -10,6 +10,7 @@ class JuPm_ServerApi_Controller
 
     private function _init()
     {
+        $this->_registerCommand('ping', 'JuPm_ServerApi_Command_Ping');
         $this->_registerCommand('list', 'JuPm_ServerApi_Command_List');
         $this->_registerCommand('query', 'JuPm_ServerApi_Command_Query');
         $this->_registerCommand('download', 'JuPm_ServerApi_Command_Download');
