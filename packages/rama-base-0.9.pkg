@@ -1,1 +1,0 @@
-{"name":"rama-base","type":"library","description":"Base for Rama Packages","version":"0.9","authors":[{"name":"Marko Kercmar","email":"m.kercmar@bigpoint.net"}],"file":"rama-base-0.9.tar","md5":"72da52f83d8326353f76cab9f5045616","contents":{"Rama\/Exception\/Test.php":"d9536813e7d45156546a5d976a6f6162","Rama\/Exception.php":"ffafe4f4e73dbfb958c325fa27cca709"}}
