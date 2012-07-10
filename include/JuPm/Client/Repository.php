@@ -8,6 +8,11 @@ class JuPm_Client_Repository
         $this->_sUrl = $sUrl;
     }
 
+    public function getUrl()
+    {
+        return $this->_sUrl;
+    }
+
     private function _exec($aRequest)
     {
         $ch = curl_init();
