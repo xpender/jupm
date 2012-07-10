@@ -16,6 +16,9 @@ class JuPm_ServerApi_Command_List implements JuPm_ServerApi_CommandInterface
             // get all versions
             $aPackageVersions = $oPackagesDb->allPackageVersions($iPackageId);
 
+            // sort by version
+            uksort($aPackageVersions, array('JuPm_Helper_Version', 'sort'));
+
             foreach ($aPackageVersions as $aPackageVersion) {
                 $aReturn['packages'][$iPackageId]['versions'][] = $aPackageVersion['version'];
             }

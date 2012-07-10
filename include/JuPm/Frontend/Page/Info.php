@@ -23,7 +23,8 @@ class JuPm_Frontend_Page_Info extends JuPm_Frontend_PageAbstract
         // get versions..
         $aPackageVersions = $oPackagesDb->allPackageVersions($iPackageId);
 
-        // TODO: Implement version sorter
+        // sort by version
+        uksort($aPackageVersions, array('JuPm_Helper_Version', 'sort'));
 
         // get latests version for info..
         $aTmp = $aPackageVersions;
