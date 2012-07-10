@@ -77,6 +77,55 @@ class JuPm_Frontend_Page_Info extends JuPm_Frontend_PageAbstract
 
         echo '</table>' . "\n";
 
+        echo '</div>' . "\n";
+
+        if ($_REQUEST['version'] && isset($aPackageVersions[$_REQUEST['version']])) {
+            $aInfoVersion = $aPackageVersions[$_REQUEST['version']];
+
+            echo '<div class="main">' . "\n";
+
+            echo 'Info about ' . $aInfoVersion['version'] . ':<br />' . "\n";
+
+            $sDownloadJson = json_encode(
+                array(
+                    array(
+                        'cmd' => 'download',
+                        'file' => $aInfoVersion['file']
+                        )
+                    )
+                );
+
+            echo '<table>' . "\n";
+            echo '<tr><th>Version</th><td>' . $aInfoVersion['version'] . '</td></tr>' . "\n";
+            echo '<tr><th>File</th><td><a href="/api.php?json=' . urlencode($sDownloadJson) . '">' . $aInfoVersion['file'] . '</a> (MD5: ' . $aInfoVersion['md5'] . ')</td></tr>' . "\n";
+            echo '<tr><th>Require</th><td>';
+            
+            if (is_array($aInfoVersion['require'])) {
+                $bNext = false;
+
+                foreach ($aInfoVersion['require'] as $sReqPkg => $sReqVer) {
+                    echo $sReqPkg . ' ' . $sReqVer . '<br />';
+                }
+            }
+
+            echo '</td></tr>' . "\n";
+            
+            echo '<tr><th>Contents</th><td>';
+            
+            foreach (array_keys($aInfoVersion['contents']) as $sFile) {
+                echo $sFile . "<br />\n";
+            }
+
+            echo '</td></tr>' . "\n";
+
+
+            echo '</table>' . "\n";
+
+            echo '</div>' . "\n";
+
+            echo '</div>' . "\n";
+        }
+
         echo JuPm_Frontend_Template::foot();
     }
 }
