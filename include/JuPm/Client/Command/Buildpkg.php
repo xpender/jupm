@@ -62,7 +62,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         // tar src folder
         chdir(CLIENT_CWD . '/src');
         
-        $sCommand = 'tar cf ' . CLIENT_CWD . '/out/' . $sPkgFileBase . '.tar' . ' *';
+        $sCommand = 'tar cf ' . CLIENT_CWD . '/out/' . $sPkgFileBase . '.tar' . ' * --exclude-vcs';
 
         exec($sCommand, $false, $iReturn);
 
