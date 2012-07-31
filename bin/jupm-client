@@ -29,6 +29,10 @@ if (count($aArguments) > 1) {
         new JuPm_Client_Command_List();
 
         exit;
+    } elseif ($aArguments[1] == 'list-upgrades') {
+        new JuPm_Client_Command_ListUpgrades();
+
+        exit;
     }
 }
 
