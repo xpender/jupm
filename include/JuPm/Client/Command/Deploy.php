@@ -79,7 +79,7 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
             }
 
             foreach ($aRepoPkgs['packages'] as $aRepoPkg) {
-                $aPackagesToRepo[$aRepoPkg['name']] = $iRepoId;
+                $aPackageToRepo[$aRepoPkg['name']] = $iRepoId;
             }
         }
 
@@ -93,13 +93,13 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
 
         while (!$bDepsResolved) {
             foreach ($aRequires as $sPackage => $sVersion) {
-                if (!isset($aPackagesToRepo[$sPackage])) {
+                if (!isset($aPackageToRepo[$sPackage])) {
                     echo "[!] Package " . $sPackage . " not found\n";
 
                     exit;
                 }
 
-                $iRepoId = $aPackagesToRepo[$sPackage];
+                $iRepoId = $aPackageToRepo[$sPackage];
 
                 $oRepo = $aRepos[$iRepoId];
 
@@ -179,7 +179,7 @@ class JuPm_Client_Command_Deploy extends JuPm_Client_CommandAbstract
             $sTmpFile = '/tmp/jupm.' . md5($aPkgQuery['file'] . time() . microtime(true) . uniqid() . mt_rand(0, 10000));
 
             // get repo client
-            $iRepoId = $aPackagesToRepo[$sPackage];
+            $iRepoId = $aPackageToRepo[$sPackage];
 
             $oRepo = $aRepos[$iRepoId];
 
