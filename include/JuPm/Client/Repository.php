@@ -37,8 +37,6 @@ class JuPm_Client_Repository
                 );
         }
 
-        echo $response;
-
         $decode = @json_decode($response, true);
 
         if (!is_array($decode)) {
