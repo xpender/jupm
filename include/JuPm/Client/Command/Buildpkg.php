@@ -84,6 +84,11 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         // add files to package json
         $aPackageJson['contents'] = $aFileMd5s;
 
+        // fix: require could be empty, but should be set as empty array
+        if (!isset($aPackageJson['require']) || !is_array($aPackageJson['require'])) {
+            $aPackageJson['require'] = array();
+        }
+
         // write pkg
         file_put_contents(CLIENT_CWD . '/out/' . $sPkgFileBase . '.pkg', json_encode($aPackageJson));
     }

@@ -7,7 +7,11 @@ class JuPm_Frontend_Controller
 
     public function dispatch()
     {
-        $sAction = $_REQUEST['action'];
+        if (isset($_REQUEST['action'])) {
+            $sAction = $_REQUEST['action'];
+        } else {
+            $sAction = 'index';
+        }
 
         $aValidActions = array(
             'list',

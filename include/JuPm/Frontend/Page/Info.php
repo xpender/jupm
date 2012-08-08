@@ -79,7 +79,7 @@ class JuPm_Frontend_Page_Info extends JuPm_Frontend_PageAbstract
 
         echo '</div>' . "\n";
 
-        if ($_REQUEST['version'] && isset($aPackageVersions[$_REQUEST['version']])) {
+        if (isset($_REQUEST['version']) && isset($aPackageVersions[$_REQUEST['version']])) {
             $aInfoVersion = $aPackageVersions[$_REQUEST['version']];
 
             echo '<div class="main">' . "\n";
@@ -100,7 +100,7 @@ class JuPm_Frontend_Page_Info extends JuPm_Frontend_PageAbstract
             echo '<tr><th>File</th><td><a href="/api.php?json=' . urlencode($sDownloadJson) . '">' . $aInfoVersion['file'] . '</a> (MD5: ' . $aInfoVersion['md5'] . ')</td></tr>' . "\n";
             echo '<tr><th>Require</th><td>';
             
-            if (is_array($aInfoVersion['require'])) {
+            if (isset($aInfoVersion['require']) && is_array($aInfoVersion['require'])) {
                 $bNext = false;
 
                 foreach ($aInfoVersion['require'] as $sReqPkg => $sReqVer) {
