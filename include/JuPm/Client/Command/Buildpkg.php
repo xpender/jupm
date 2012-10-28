@@ -19,7 +19,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
             exit;
         }
 
-        $bPackageJsonValid = JuPm_Validator_PackageJson::validateString($sPackageJson, &$aPackageJsonErrors);
+        $bPackageJsonValid = JuPm_Validator_PackageJson::validateString($sPackageJson, $aPackageJsonErrors);
 
         if (!$bPackageJsonValid) {
             echo "[!] Errors found at package.json\n";
