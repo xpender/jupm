@@ -14,7 +14,7 @@ $aArguments = $_SERVER['argv'];
 
 if (count($aArguments) > 1) {
     if ($aArguments[1] == 'buildpkg') {
-        new JuPm_Client_Command_Buildpkg();
+        new JuPm_Client_Command_Buildpkg($aArguments);
 
         exit;
     } elseif ($aArguments[1] == 'deploy') {

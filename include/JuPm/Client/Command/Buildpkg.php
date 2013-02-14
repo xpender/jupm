@@ -3,6 +3,16 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
 {
     public function execute()
     {
+        // check for --force parameter
+        $bForce = false;
+
+        foreach ($this->_aCmdArguments as $sArgument) {
+            if ($sArgument == '--force') {
+                $bForce = true;
+            }
+        }
+
+        // package.json exists in current CWD?
         $sPackageJsonFile = CLIENT_CWD . '/package.json';
 
         if (!file_exists($sPackageJsonFile)) {
@@ -11,6 +21,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
             exit;
         }
 
+        // package.json file readable?
         $sPackageJson = @file_get_contents($sPackageJsonFile);
 
         if (!$sPackageJson) {
@@ -19,6 +30,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
             exit;
         }
 
+        // package.json file valid?
         $bPackageJsonValid = JuPm_Validator_PackageJson::validateString($sPackageJson, $aPackageJsonErrors);
 
         if (!$bPackageJsonValid) {
@@ -31,20 +43,27 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
             exit;
         }
 
+        // decode it an array
         $aPackageJson = json_decode($sPackageJson, true);
 
+        // create out folder if non existant
         if (!is_dir(CLIENT_CWD . '/out')) {
             mkdir(CLIENT_CWD . '/out');
         }
         
+        // define package file name
         $sPkgFileBase = $aPackageJson['name'] . '-' . $aPackageJson['version'];
         
-        if (file_exists(CLIENT_CWD . '/out/' . $sPkgFileBase . '.pkg')) {
-            echo '[!] Error, out/' . $sPkgFileBase . '.pkg already exists' . "\n";
+        // if not forced, check if already built
+        if (!$bForce) {
+            if (file_exists(CLIENT_CWD . '/out/' . $sPkgFileBase . '.pkg')) {
+                echo '[!] Error, out/' . $sPkgFileBase . '.pkg already exists' . "\n";
 
-            exit;
+                exit;
+            }
         }
 
+        // start building..
         echo "[*] Building package" . "\n";
         echo " - name: " . $aPackageJson['name'] . "\n";
         echo " - version: " . $aPackageJson['version'] . "\n";
@@ -68,6 +87,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
 
         chdir(CLIENT_CWD);
 
+        // check tar return
         if ($iReturn !== 0) {
             echo "[!] Error on tar'ing\n";
 

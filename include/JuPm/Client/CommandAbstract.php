@@ -1,8 +1,12 @@
 <?php
 abstract class JuPm_Client_CommandAbstract
 {
-    public function __construct()
+    protected $_aCmdArguments;
+
+    public function __construct($aCmdArguments = array())
     {
+        $this->_aCmdArguments = $aCmdArguments;
+
         $this->execute();
     }
 
