@@ -1,18 +1,15 @@
 <?php
-class JuPm_Frontend_Page_Index extends JuPm_Frontend_PageAbstract
+class JuPm_Frontend_Action_Index extends JuPm_Frontend_ActionAbstract
 {
-    public function display()
+    public function getName()
     {
-        echo JuPm_Frontend_Template::head();
+        return 'index';
+    }
 
-        echo '<div class="main">' . "\n";
-
-        echo '<ul>';
-        echo '<li><a href="/?action=list">Packages list</a></li>';
-        echo '</ul>';
-
-        echo '</div>' . "\n";
-
-        echo JuPm_Frontend_Template::foot();
+    protected function _execute()
+    {
+        $this->_oTemplate->display(
+            'index'
+            );
     }
 }

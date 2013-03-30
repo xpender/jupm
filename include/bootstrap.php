@@ -4,6 +4,8 @@ $sProjectRoot = realpath(str_replace(basename(__FILE__), '', __FILE__) . '/../')
 
 set_include_path('.:' . $sProjectRoot . '/include/');
 
+define('PROJECT_ROOT', $sProjectRoot);
+
 // set constatns
 define('JUPM_ROOT', $sProjectRoot);
 define('JUPM_PACKAGES_FOLDER', $sProjectRoot . '/packages');

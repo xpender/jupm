@@ -1,21 +1,25 @@
 <?php
-class JuPm_Frontend_Page_List extends JuPm_Frontend_PageAbstract
+/**
+ * jupm
+ *
+ * @package net.xpender.jupm
+ * @author Marko Kercmar <m.kercmar@bigpoint.net>
+ */
+class JuPm_Frontend_Action_List extends JuPm_Frontend_ActionAbstract
 {
-    public function display()
+    public function getName()
     {
-        echo JuPm_Frontend_Template::head();
-        
+        return 'list';
+    }
+
+    protected function _execute()
+    {
+        // get packages db
         $oPackagesDb = JuPm_Server_PackagesDb::getInstance();
 
-        echo '<div class="main">' . "\n";
-           
-        echo '<table border="1">' . "\n";
-        echo '<tr>' . "\n";
-        echo '<th>Name</th>' . "\n";
-        echo '<th>Latest version</th>' . "\n";
-        echo '<th>Description</th>' . "\n";
-        echo '</tr>' . "\n";
-            
+        // new arary
+        $aPackages = array();
+
         foreach ($oPackagesDb->allPackages() as $iPackageId => $sPackageName) {
             // get versions..
             $aPackageVersions = $oPackagesDb->allPackageVersions($iPackageId);
@@ -30,19 +34,23 @@ class JuPm_Frontend_Page_List extends JuPm_Frontend_PageAbstract
 
             unset($aTmp);
 
-            echo '<tr>' . "\n";
-
-            echo '<td><a href="/?action=info&package=' . $sPackageName . '">' . $sPackageName . '</a></td>' . "\n";
-            echo '<td>' . $aLatestVersion['version'] . '</td>' . "\n";
-            echo '<td>' . $aLatestVersion['description'] . '</td>' . "\n";
-            
-            echo '</tr>' . "\n";
+            // save to array
+            $aPackages[$iPackageId] = array(
+                'id' => $iPackageId,
+                'name' => $sPackageName,
+                'latestVersion' => $aLatestVersion
+                );
         }
 
-        echo '</table>' . "\n";
+        // assign to template
+        $this->_oTemplate->assign(
+            'aPackages',
+            $aPackages
+            );
 
-        echo '</div>' . "\n";
-
-        echo JuPm_Frontend_Template::foot();
+        // show template
+        $this->_oTemplate->display(
+            'list'
+            );
     }
 }
