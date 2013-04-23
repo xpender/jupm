@@ -73,6 +73,8 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
 
         $this->_recursiveFileScan(CLIENT_CWD . '/src', $aFiles);
 
+        sort($aFiles);
+
         // md5 files
         foreach ($aFiles as $sFile) {
             $aFileMd5s[$sFile] = md5_file(CLIENT_CWD . '/src/' . $sFile);
@@ -81,7 +83,7 @@ class JuPm_Client_Command_Buildpkg extends JuPm_Client_CommandAbstract
         // tar src folder
         chdir(CLIENT_CWD . '/src');
         
-        $sCommand = 'tar cf ' . CLIENT_CWD . '/out/' . $sPkgFileBase . '.tar' . ' * --exclude-vcs';
+        $sCommand = 'tar cf ' . CLIENT_CWD . '/out/' . $sPkgFileBase . '.tar' . ' ' . implode(' ', $aFiles);
 
         exec($sCommand, $false, $iReturn);
 
