@@ -13,7 +13,7 @@ class JuPm_Servercli_Command_Builddb extends JuPm_ServerCli_CommandAbstract
                 continue;
             }
 
-            if (preg_match('/^([a-z-]+)-([0-9\.]+).pkg$/', $sEntry)) {
+            if (preg_match('/^([a-z0-9\-]+)-([0-9\.]+).pkg$/', $sEntry)) {
                 $aPackages[] = str_replace('.pkg', '', $sEntry);
             }
         }

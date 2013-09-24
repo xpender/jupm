@@ -61,7 +61,7 @@ class JuPm_Validator_PackageJson
             $bError = true;
         }
 
-        if (!preg_match('/^[a-z-]+$/', $aArray['name'])) {
+        if (!preg_match('/^[a-z0-9\-]+$/', $aArray['name'])) {
             $aErrors[] = 'pkg name contains invalid characters';
 
             $bError = true;
